@@ -1,1745 +1,1105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Shima Gallery - Realistic artwork with pen and pencil" />
-  <title>Shima Gallery | Realistic Art</title>
-  <meta property="og:title" content="Shima Gallery – Realistic Art" />
-  <meta property="og:description" content="Pen & pencil art by Shima. Gallery & contact." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#1a1a1a" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Georgia', serif;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      color: #f0f0f0;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    .language-selector {
-      position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    .language-selector:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(212, 175, 55, 0.5);
-    }
-
-    .language-selector select {
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-      border: none;
-      background: transparent;
-      color: #f0f0f0;
-      cursor: pointer;
-      font-weight: 500;
-      font-family: 'Georgia', serif;
-      width: 100%;
-    }
-
-    .language-selector select:focus {
-      outline: 2px solid #d4af37;
-      border-radius: 8px;
-    }
-
-    .language-selector select option {
-      background: #2d2d2d;
-      color: #f0f0f0;
-      padding: 10px;
-    }
-
-    header {
-      background: rgba(0, 0, 0, 0.9);
-      padding: 15px 0;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-    }
-
-    nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #d4af37;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: color 0.3s ease;
-    }
-
-    .logo:hover {
-      color: #f0c748;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      list-style: none;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: #f0f0f0;
-      text-decoration: none;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      position: relative;
-      white-space: nowrap;
-      padding: 8px 0;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: #d4af37;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .nav-links a:hover {
-      color: #d4af37;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .language-item {
-      margin-left: 15px;
-    }
-
-    .language-item .language-selector {
-      min-width: 140px;
-    }
-
-    /* Page Container */
-    .page-container {
-      display: none;
-      min-height: 100vh;
-      padding-top: 80px;
-    }
-
-    .page-container.active {
-      display: block;
-    }
-
-    /* Home Page */
-    .home-page {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 20px;
-      background: radial-gradient(circle at center, #2d2d2d 0%, #1a1a1a 100%);
-    }
-
-    .home-content {
-      max-width: 800px;
-    }
-
-    .home-content h1 {
-      font-size: 4rem;
-      margin-bottom: 2rem;
-      color: #d4af37;
-      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-      font-weight: 300;
-      letter-spacing: 3px;
-    }
-
-    .home-content p {
-      font-size: 1.4rem;
-      margin-bottom: 3rem;
-      color: #c0c0c0;
-      font-weight: 300;
-      letter-spacing: 1px;
-    }
-
-    .home-buttons {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 3rem;
-    }
-
-    .page-button {
-      display: inline-block;
-      padding: 18px 45px;
-      background: linear-gradient(135deg, #d4af37 0%, #f0c748 100%);
-      color: #1a1a1a;
-      text-decoration: none;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      border-radius: 8px;
-      transition: all 0.4s ease;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-    }
-
-    .page-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
-      background: linear-gradient(135deg, #f0c748 0%, #ffd700 100%);
-    }
-
-    /* Gallery Page */
-    .gallery-page {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 3rem;
-      margin-bottom: 4rem;
-      color: #d4af37;
-      position: relative;
-      padding-bottom: 1.5rem;
-      font-weight: 300;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #d4af37, transparent);
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      transition: all 0.4s ease;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      aspect-ratio: 4 / 5;
-    }
-
-    .gallery-item:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: transform 0.6s ease;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.08);
-    }
-
-    .gallery-overlay {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: linear-gradient(135deg, #d4af37 0%, #f0c748 100%);
-      color: #1a1a1a;
-      padding: 0.6rem 1rem;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      backdrop-filter: blur(10px);
-      pointer-events: none;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Action buttons */
-    .gallery-actions {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-    }
-
-    .action-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
-      font-size: 1.1rem;
-      border: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .select-btn {
-      background: linear-gradient(135deg, #d4af37 0%, #f0c748 100%);
-      color: #1a1a1a;
-    }
-
-    .select-btn:hover {
-      transform: scale(1.1);
-      background: linear-gradient(135deg, #f0c748 0%, #ffd700 100%);
-    }
-
-    .select-btn.selected {
-      background: #4CAF50;
-      color: white;
-    }
-
-    .zoom-btn {
-      background: rgba(255, 255, 255, 0.9);
-      color: #1a1a1a;
-    }
-
-    .zoom-btn:hover {
-      transform: scale(1.1);
-      background: white;
-    }
-
-    .purchase-info {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3rem;
-      border-radius: 15px;
-      max-width: 900px;
-      margin: 4rem auto 0;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
-      text-align: center;
-    }
-
-    .purchase-info:hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-
-    .purchase-info p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      color: #e0e0e0;
-      margin: 0;
-      font-weight: 300;
-    }
-
-    .purchase-info strong {
-      color: #d4af37;
-      font-weight: 600;
-    }
-
-    /* About & Contact Page */
-    .about-contact-page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .about-content {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3rem;
-      border-radius: 15px;
-      max-width: 800px;
-      margin: 0 auto 4rem;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .about-content:hover {
-      transform: translateY(-10px);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-
-    .about-content p {
-      color: #e0e0e0;
-      font-size: 1.2rem;
-      line-height: 1.8;
-      text-align: center;
-      font-weight: 300;
-    }
-
-    .contact-content {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3rem;
-      border-radius: 15px;
-      max-width: 800px;
-      margin: 0 auto;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
-      text-align: center;
-    }
-
-    .contact-content:hover {
-      transform: translateY(-10px);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-
-    .contact-content p {
-      color: #e0e0e0;
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 2rem;
-      font-weight: 300;
-    }
-
-    .email-button {
-      display: inline-block;
-      background: linear-gradient(135deg, #d4af37 0%, #f0c748 100%);
-      color: #1a1a1a !important;
-      text-decoration: none;
-      padding: 15px 40px;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-      font-size: 1.1rem;
-    }
-
-    .email-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
-      background: linear-gradient(135deg, #f0c748 0%, #ffd700 100%);
-      color: #1a1a1a !important;
-      border-color: #d4af37;
-    }
-
-    /* NEW PURCHASE PAGE STYLES - Matching original design */
-    .purchase-page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .cart-items {
-      display: grid;
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.4s ease;
-    }
-
-    .cart-item:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-
-    .cart-item-image {
-      width: 120px;
-      height: 150px;
-      border-radius: 12px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .cart-item-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .cart-item-details {
-      flex: 1;
-    }
-
-    .cart-item-number {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #d4af37;
-      margin-bottom: 0.5rem;
-    }
-
-    .cart-item-remove {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #f0f0f0;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .cart-item-remove:hover {
-      background: rgba(255, 0, 0, 0.2);
-      border-color: rgba(255, 0, 0, 0.5);
-    }
-
-    .empty-cart {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: #c0c0c0;
-    }
-
-    .empty-cart p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .order-form {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3rem;
-      border-radius: 15px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .order-form:hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-
-    .form-group {
-      margin-bottom: 2rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #d4af37;
-      font-weight: 500;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      color: #f0f0f0;
-      font-family: 'Georgia', serif;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #d4af37;
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .selected-artworks {
-      background: rgba(212, 175, 55, 0.1);
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-    }
-
-    .selected-artworks h4 {
-      color: #d4af37;
-      margin-bottom: 1rem;
-    }
-
-    .artwork-numbers {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .artwork-number {
-      background: #d4af37;
-      color: #1a1a1a;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-
-    .submit-button {
-      background: linear-gradient(135deg, #d4af37 0%, #f0c748 100%);
-      color: #1a1a1a;
-      border: none;
-      padding: 1.2rem 3rem;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 100%;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .submit-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
-    }
-
-    .success-message {
-      text-align: center;
-      padding: 3rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      display: none;
-    }
-
-    .success-message h3 {
-      color: #4CAF50;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .success-message p {
-      color: #e0e0e0;
-      margin-bottom: 2rem;
-    }
-
-    .success-icon {
-      font-size: 4rem;
-      color: #4CAF50;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Gallery item selection */
-    .gallery-item.selected {
-      border: 3px solid #d4af37;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-    }
-
-    .cart-indicator {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: rgba(212, 175, 55, 0.1);
-      border-radius: 20px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    .cart-indicator:hover {
-      background: rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.5);
-    }
-
-    .cart-count {
-      background: #d4af37;
-      color: #1a1a1a;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 20px;
-    }
-
-    .lightbox.open {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .lightbox-content {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lightbox-img {
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .lightbox .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(212, 175, 55, 0.2);
-      border: 2px solid rgba(212, 175, 55, 0.6);
-      color: #d4af37;
-      font-size: 1.5rem;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2001;
-    }
-
-    .lightbox .close-btn:hover {
-      background: rgba(212, 175, 55, 0.3);
-      border-color: #d4af37;
-      transform: scale(1.1);
-    }
-
-    .lightbox .counter {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #d4af37;
-      font-size: 1.1rem;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 0.7rem 1.5rem;
-      border-radius: 50px;
-      backdrop-filter: blur(10px);
-      font-weight: 600;
-    }
-
-    .lightbox .nav {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      pointer-events: none;
-    }
-
-    .lightbox .nav button {
-      pointer-events: auto;
-      background: rgba(212, 175, 55, 0.2);
-      border: 2px solid rgba(212, 175, 55, 0.5);
-      color: #d4af37;
-      font-size: 2rem;
-      width: 60px;
-      height: 60px;
-      margin: 0 1rem;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lightbox .nav button:hover {
-      background: rgba(212, 175, 55, 0.3);
-      border-color: #d4af37;
-      transform: scale(1.1);
-    }
-
-    body.lb-lock {
-      overflow: hidden;
-    }
-
-    /* Mobile Menu */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 4px;
-      padding: 5px;
-    }
-
-    .menu-toggle span {
-      width: 25px;
-      height: 3px;
-      background: #d4af37;
-      transition: 0.3s;
-      border-radius: 2px;
-    }
-
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
-
-      .nav-links {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        flex-direction: column;
-        padding: 2rem;
-        gap: 1rem;
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.4s ease;
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-      }
-
-      .nav-links.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .language-item {
-        margin-left: 0;
-        margin-top: 1rem;
-      }
-
-      .language-item .language-selector {
-        min-width: 100%;
-      }
-
-      .home-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .home-content p {
-        font-size: 1.1rem;
-      }
-
-      .nav-links a {
-        font-size: 1.1rem;
-        padding: 12px 0;
-        text-align: center;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-      }
-
-      .nav-links a:last-child {
-        border-bottom: none;
-      }
-
-      .logo {
-        font-size: 1.2rem;
-      }
-
-      .section-title {
-        font-size: 2.2rem;
-      }
-
-      .home-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .page-button {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .gallery {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-      }
-
-      .gallery-item {
-        aspect-ratio: 3 / 4;
-      }
-
-      .about-content, .contact-content, .purchase-info {
-        padding: 2rem;
-      }
-
-      .lightbox .nav button {
-        font-size: 1.5rem;
-        width: 50px;
-        height: 50px;
-        margin: 0 0.5rem;
-      }
-
-      .lightbox .close-btn {
-        font-size: 1.2rem;
-        width: 40px;
-        height: 40px;
-        top: 15px;
-        right: 15px;
-      }
-
-      .lightbox .counter {
-        font-size: 1rem;
-        bottom: 15px;
-      }
-
-      .email-button {
-        padding: 12px 30px;
-        font-size: 1rem;
-      }
-
-      .cart-item {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-      }
-
-      .cart-item-image {
-        width: 100%;
-        height: 200px;
-      }
-
-      .order-form {
-        padding: 2rem;
-      }
-
-      .cart-indicator {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-      }
-
-      .action-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-        animation: none !important;
-      }
-    }
-
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #1a1a1a;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #d4af37;
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #f0c748;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio von Daniyal Jahandari – M.Sc. Elektrotechnik / Erneuerbare Energien">
+    <title>Daniyal Jahandari – Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a3264;
+            --primary-dark: #082550;
+            --primary-light: #1e4f8f;
+            --accent: #008cc8;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--gray-900);
+            background: #f0f2f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 6px 15px rgba(10, 50, 100, 0.3);
+            border: 4px solid var(--white);
+        }
+
+        h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: var(--gray-700);
+            font-weight: 500;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+            background: var(--gray-100);
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--gray-700);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .lang-btn:hover {
+            background: var(--white);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            background: var(--white);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .tab-button {
+            padding: 14px 20px;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            color: var(--gray-700);
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .tab-button:hover {
+            background: var(--gray-100);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(10, 50, 100, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: var(--primary-dark);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .experience-item:hover, .education-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(10, 50, 100, 0.15);
+        }
+
+        .date {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.85em;
+            background: var(--primary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .company {
+            color: var(--gray-900);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin: 6px 0;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--gray-700);
+            font-size: 0.95em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-category {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+            border-top: 3px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(10, 50, 100, 0.15);
+        }
+
+        .skill-category h4 {
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .project-card {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(10, 50, 100, 0.15);
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 12px;
+            margin-right: 8px;
+            padding: 10px 18px;
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 50, 100, 0.3);
+            background: var(--primary-dark);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            padding: 25px 20px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin: 8px 6px;
+            padding: 12px 20px;
+            background: var(--white);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background: var(--primary-dark);
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(10, 50, 100, 0.3);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            background: var(--primary-dark);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 3px;
+            background: var(--gray-200);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: var(--gray-700);
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            padding: 25px 20px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 2px solid var(--gray-200);
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            header { padding: 25px 15px; margin-bottom: 15px; }
+            .avatar { width: 80px; height: 80px; font-size: 32px; }
+            h1 { font-size: 1.5em; }
+            .subtitle { font-size: 1em; }
+            .language-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+                justify-content: center;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .tabs { flex-direction: column; display: none; padding: 12px; gap: 8px; }
+            .tabs.active { display: flex; }
+            .menu-toggle { display: block; }
+            .tab-button { width: 100%; padding: 12px 16px; font-size: 0.9em; }
+            .tab-content { padding: 20px 15px; }
+            h2 { font-size: 1.4em; margin-bottom: 15px; }
+            h3 { font-size: 1.2em; margin-top: 20px; margin-bottom: 12px; }
+            .experience-item, .education-item { padding: 16px; margin-bottom: 15px; }
+            .project-card { padding: 16px; margin-bottom: 15px; }
+            .skills-grid { grid-template-columns: 1fr; gap: 12px; }
+            .skill-category { padding: 16px; }
+            .cta-section { padding: 20px 15px; margin-top: 25px; }
+            .cta-button { display: block; margin: 8px 0; width: 100%; }
+            .project-link { display: block; width: 100%; margin: 8px 0; text-align: center; }
+            .info-box { padding: 20px 15px; margin-top: 25px; }
+            .scroll-to-top { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 1.2em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 8px; }
+            header { padding: 20px 12px; }
+            h1 { font-size: 1.3em; }
+            .subtitle { font-size: 0.9em; }
+            .tab-content { padding: 15px 12px; }
+            h2 { font-size: 1.3em; }
+            h3 { font-size: 1.1em; }
+            .experience-item, .education-item, .project-card { padding: 14px; }
+        }
+
+        .lang-btn:focus,
+        .tab-button:focus,
+        .project-link:focus,
+        .cta-button:focus,
+        .menu-toggle:focus,
+        .scroll-to-top:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo" id="logoText">Shima Gallery</div>
-      
-      <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#" id="navHome" onclick="showPage('home')">Home</a></li>
-        <li><a href="#" id="navGallery" onclick="showPage('gallery')">Gallery</a></li>
-        <li><a href="#" id="navPurchase" onclick="showPage('purchase')">
-          <div class="cart-indicator">
-            <span>🛒</span>
-            <span class="cart-count" id="cartCount">0</span>
-          </div>
-        </a></li>
-        <li><a href="#" id="navAbout" onclick="showPage('about-contact')">About Me</a></li>
-        <li class="language-item">
-          <div class="language-selector">
-            <select id="languageSelect" onchange="changeLanguage()">
-              <option value="en">English</option>
-              <option value="de">Deutsch</option>
-              <option value="fa">فارسی</option>
-            </select>
-          </div>
-        </li>
-      </ul>
-    </nav>
-  </header>
+    <button class="scroll-to-top" onclick="scrollToTop()" aria-label="Nach oben scrollen">↑</button>
 
-  <!-- Home Page -->
-  <div id="home-page" class="page-container active">
-    <section class="home-page">
-      <div class="home-content">
-        <h1 id="heroTitle">Shima Gallery</h1>
-        <p id="heroSubtitle">Realistic Artwork with Pen & Pencil ✏️</p>
-        <div class="home-buttons">
-          <button class="page-button" onclick="showPage('gallery')">View Gallery</button>
-          <button class="page-button" onclick="showPage('about-contact')">About Me</button>
-        </div>
-      </div>
-    </section>
-  </div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="language-switcher">
+                <button onclick="switchLanguage('de')" id="lang-de" class="lang-btn active">🇩🇪 DE</button>
+                <button onclick="switchLanguage('en')" id="lang-en" class="lang-btn">🇬🇧 EN</button>
+            </div>
+            <div class="header-content">
+                <div class="avatar" aria-label="Avatar">⚡</div>
+                <div>
+                    <h1>Daniyal Jahandari</h1>
+                    <p class="subtitle" id="header-subtitle">M.Sc. Elektrotechnik – Erneuerbare Energien</p>
+                </div>
+            </div>
+        </header>
 
-  <!-- Gallery Page -->
-  <div id="gallery-page" class="page-container">
-    <section class="gallery-page">
-      <h2 class="section-title" id="galleryTitle">My Artworks</h2>
-      <div class="gallery" id="galleryGrid">
-        <!-- Gallery items with separate zoom and selection buttons -->
-        <div class="gallery-item" data-artwork="1">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(1, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(1)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0471.JPG" alt="Realistic portrait drawing with pen">
-          <div class="gallery-overlay"><span>1</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="2">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(2, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(2)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0472.JPG" alt="Detailed pencil drawing of a face">
-          <div class="gallery-overlay"><span>2</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="3">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(3, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(3)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0474.JPG" alt="Pen art with shading techniques">
-          <div class="gallery-overlay"><span>3</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="4">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(4, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(4)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0476.JPG" alt="Realistic eye drawing with pencil">
-          <div class="gallery-overlay"><span>4</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="5">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(5, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(5)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0477.JPG" alt="Portrait art with pen technique">
-          <div class="gallery-overlay"><span>5</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="6">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(6, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(6)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0479.JPG" alt="Detailed face study with pen">
-          <div class="gallery-overlay"><span>6</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="7">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(7, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(7)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0481.JPG" alt="Artwork with shading techniques">
-          <div class="gallery-overlay"><span>7</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="8">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(8, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(8)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0482.JPG" alt="Realistic drawing with precision">
-          <div class="gallery-overlay"><span>8</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="9">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(9, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(9)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0485.JPG" alt="Pencil portrait with details">
-          <div class="gallery-overlay"><span>9</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="10">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(10, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(10)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="IMG_0486.JPG" alt="Pen artwork in profile">
-          <div class="gallery-overlay"><span>10</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="11">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(11, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(11)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-09-19_01-14-34.jpg" alt="Realistic hand drawing with pen">
-          <div class="gallery-overlay"><span>11</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="12">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(12, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(12)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-04-36.jpg" alt="Detailed portrait study">
-          <div class="gallery-overlay"><span>12</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="13">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(13, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(13)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-04-44.jpg" alt="Pen art with depth">
-          <div class="gallery-overlay"><span>13</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="14">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(14, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(14)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-04-51.jpg" alt="Pencil drawing with texture">
-          <div class="gallery-overlay"><span>14</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="15">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(15, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(15)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-05-39.jpg" alt="Realistic facial expressions">
-          <div class="gallery-overlay"><span>15</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="16">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(16, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(16)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-06-08.jpg" alt="Artwork with light and shadow">
-          <div class="gallery-overlay"><span>16</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="17">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(17, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(17)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-06-39.jpg" alt="Pen art in detail">
-          <div class="gallery-overlay"><span>17</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="18">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(18, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(18)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-06-52.jpg" alt="Pencil study with precision">
-          <div class="gallery-overlay"><span>18</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="19">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(19, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(19)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-07-09.jpg" alt="Realistic eye area">
-          <div class="gallery-overlay"><span>19</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="20">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(20, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(20)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-07-39.jpg" alt="Artwork with depth effect">
-          <div class="gallery-overlay"><span>20</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="21">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(21, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(21)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-07-54.jpg" alt="Portrait drawing with pen">
-          <div class="gallery-overlay"><span>21</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="22">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(22, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(22)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-08-09.jpg" alt="Realistic facial features">
-          <div class="gallery-overlay"><span>22</span></div>
-        </div>
-        <div class="gallery-item" data-artwork="23">
-          <div class="gallery-actions">
-            <button class="action-btn select-btn" onclick="toggleArtworkSelection(23, this)">+</button>
-            <button class="action-btn zoom-btn" onclick="openLightbox(23)">🔍</button>
-          </div>
-          <img loading="lazy" decoding="async" src="photo_2025-10-02_19-08-16.jpg" alt="Detailed pencil art">
-          <div class="gallery-overlay"><span>23</span></div>
-        </div>
-      </div>
-
-      <div class="purchase-info">
-        <p id="purchaseText">
-          <strong id="purchaseStrong">Interested in purchasing an artwork?</strong><br />
-          <span id="purchaseDescription">Use the + button to select artworks, then proceed to purchase to send your inquiry.</span>
-        </p>
-      </div>
-    </section>
-  </div>
-
-  <!-- NEW PURCHASE PAGE -->
-  <div id="purchase-page" class="page-container">
-    <section class="purchase-page">
-      <h2 class="section-title" id="purchaseTitle">Purchase Artworks</h2>
-      
-      <div class="cart-items" id="cartItems">
-        <!-- Cart items will be dynamically added here -->
-      </div>
-
-      <div class="order-form" id="orderForm">
-        <h3 style="color: #d4af37; margin-bottom: 2rem; text-align: center;">Order Inquiry Form</h3>
-        
-        <div class="form-group">
-          <label for="firstName" id="firstNameLabel">First Name *</label>
-          <input type="text" id="firstName" required placeholder="Enter your first name">
-        </div>
-
-        <div class="form-group">
-          <label for="lastName" id="lastNameLabel">Last Name *</label>
-          <input type="text" id="lastName" required placeholder="Enter your last name">
-        </div>
-
-        <div class="form-group">
-          <label for="email" id="emailLabel">Email Address *</label>
-          <input type="email" id="email" required placeholder="Enter your email address">
-        </div>
-
-        <div class="form-group">
-          <label for="message" id="messageLabel">Additional Message</label>
-          <textarea id="message" rows="4" placeholder="Any additional information or questions..."></textarea>
-        </div>
-
-        <div class="selected-artworks">
-          <h4>Selected Artworks:</h4>
-          <div class="artwork-numbers" id="selectedArtworksList">
-            <!-- Selected artworks will be shown here -->
-          </div>
-        </div>
-
-        <button class="submit-button" onclick="submitOrder()" id="submitButton">
-          Send Purchase Inquiry
+        <button class="menu-toggle"
+            onclick="toggleMenu()"
+            aria-expanded="false"
+            aria-controls="tabsMenu">
+            ☰ Menü
         </button>
-      </div>
 
-      <div class="success-message" id="successMessage">
-        <div class="success-icon">✓</div>
-        <h3>Thank You for Your Interest!</h3>
-        <p>Your purchase inquiry has been successfully sent to Shima. You will receive a confirmation email shortly.</p>
-        <button class="page-button" onclick="showPage('home')">Return to Home</button>
-      </div>
-    </section>
-  </div>
+        <nav class="tabs" id="tabsMenu" role="tablist">
+            <button class="tab-button active" onclick="showTab('about', event)" id="tab-about" role="tab" aria-selected="true" aria-controls="about">Über mich</button>
+            <button class="tab-button" onclick="showTab('projects', event)" id="tab-projects" role="tab" aria-selected="false" aria-controls="projects">Projekte</button>
+            <button class="tab-button" onclick="showTab('skills', event)" id="tab-skills" role="tab" aria-selected="false" aria-controls="skills">Kompetenzen</button>
+            <button class="tab-button" onclick="showTab('docku', event)" id="tab-docku" role="tab" aria-selected="false" aria-controls="docku">Zertifikate</button>
+            <button class="tab-button" onclick="showTab('contact', event)" id="tab-contact" role="tab" aria-selected="false" aria-controls="contact">Kontakt</button>
+        </nav>
 
-  <!-- About & Contact Page -->
-  <div id="about-contact-page" class="page-container">
-    <section class="about-contact-page">
-      <h2 class="section-title" id="aboutTitle">About Me</h2>
-      <div class="about-content">
-        <p id="aboutText">
-          Welcome to my gallery! I am Shima and I create realistic artworks with pen and pencil. 
-          Each piece is created with patience, precision and passion for detail. I find my inspiration 
-          in the beauty of everyday life and the complexity of human expression.
-        </p>
-      </div>
+        <main>
+            <!-- About Section -->
+            <section id="about" class="tab-content active" role="tabpanel" aria-labelledby="tab-about">
+                <h2 id="about-title">Über mich</h2>
+                <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 25px;" id="about-intro">
+                    Elektroingenieur (M.Sc.) mit mehrjähriger Erfahrung in der
+                    <strong>Gebäude- und Industrietechnik</strong> sowie fundierten Kenntnissen in
+                    <strong>Planung, Simulation, Installation, Verkabelung und Inbetriebnahme</strong>
+                    elektrischer Systeme. Schwerpunkt auf erneuerbaren Energien, Schaltschrankbau
+                    und Anlagenbetrieb.
+                </p>
 
-      <h2 class="section-title" id="contactTitle">Contact</h2>
-      <div class="contact-content">
-        <p id="contactText">
-          Interested in my artwork? For purchase, exhibitions, commissions or collaborations, 
-          feel free to reach out to me. I'd love to hear from you!
-        </p>
-        <a href="mailto:ShimaArtist1994@gmail.com" class="email-button" id="emailButton">ShimaArtist1994@gmail.com</a>
-      </div>
-    </section>
-  </div>
+                <h3 id="exp-title">Berufserfahrung</h3>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="close-btn" id="lbClose">✕</button>
-    <div class="nav">
-      <button id="lbPrev">←</button>
-      <button id="lbNext">→</button>
+                <div class="experience-item">
+                    <div class="date" id="job1-date">Mai 2025 – heute</div>
+                    <div class="company" id="job1-title">Elektriker | Aene Engelberecht, Iran</div>
+                    <ul id="job1-list">
+                        <li>Simulation und Planung von Photovoltaikanlagen mit PV*SOL und MATLAB</li>
+                        <li>Komplette Schaltschrankfertigung sowie Durchführung aller elektrotechnischen Tätigkeiten</li>
+                        <li>Installation, Verdrahtung und Inbetriebnahme elektrischer Anlagen</li>
+                        <li>Prüfung und Dokumentation der ausgeführten Arbeiten nach technischen Vorgaben</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="date" id="job2-date">Januar 2020 – April 2021</div>
+                    <div class="company" id="job2-title">Leiter der Elektroabteilung | Mojtama Gardeshgaran Arghavan Co., Iran</div>
+                    <ul id="job2-list">
+                        <li>Fachliche Führung und Koordination des Elektroteams</li>
+                        <li>Planung, Wartung und Überwachung elektrischer Anlagen im Gebäudeumfeld</li>
+                        <li>Sicherstellung der Einhaltung geltender Sicherheitsvorschriften und Normen</li>
+                        <li>Projektplanung sowie Einweisung und Schulung der Mitarbeitenden</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="date" id="job3-date">Februar 2017 – Dezember 2019</div>
+                    <div class="company" id="job3-title">Elektroingenieur (Generatorhaus) | Mehvarsazan Co., Iran</div>
+                    <ul id="job3-list">
+                        <li>Wartung und Reparatur von Generatoren sowie weiterer elektrischer Anlagen</li>
+                        <li>Diagnose und Behebung von Störungen zur Sicherstellung der Anlagenverfügbarkeit</li>
+                        <li>Überwachung von Leistung und Effizienz der Generatoren im laufenden Betrieb</li>
+                        <li>Installation und Inbetriebnahme neuer Systeme und Komponenten</li>
+                    </ul>
+                </div>
+
+                <h3 id="edu-title">Bildungsweg</h3>
+
+                <div class="education-item">
+                    <div class="date" id="edu1-date">2023 – 2025</div>
+                    <div class="company" id="edu1-title">M.Sc. Elektrotechnik – Erneuerbare Energien</div>
+                    <p id="edu1-location">Hochschule Stralsund, Deutschland</p>
+                    <p id="edu1-focus"><strong>Schwerpunkte:</strong> Planung und Simulation elektrischer Systeme, Photovoltaik, Windenergie, Netzintegration erneuerbarer Energien</p>
+                </div>
+
+                <div class="education-item">
+                    <div class="date" id="edu2-date">2015 – 2017</div>
+                    <div class="company" id="edu2-title">B.Sc. Elektronik-Technologie-Ingenieurwesen</div>
+                    <p id="edu2-location">Bahonar Universität, Iran</p>
+                    <p id="edu2-focus"><strong>Schwerpunkte:</strong> Elektronische Systeme, Leistungselektronik, Steuerungs- und Regelungstechnik</p>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="tab-content" role="tabpanel" aria-labelledby="tab-projects">
+                <h2 id="projects-title">Projekte</h2>
+
+                <div class="project-card">
+                    <h3 id="proj1-title">Photovoltaik-Planung & Simulation</h3>
+                    <p style="margin-top: 10px;" id="proj1-desc">
+                        Auslegung, Simulation und Ertragsprognose von Photovoltaikanlagen unter Verwendung
+                        professioneller Planungssoftware. Schwerpunkt auf Verschattungsanalyse,
+                        Wechselrichterdimensionierung und wirtschaftlicher Bewertung.
+                    </p>
+                    <ul style="margin-top: 15px;" id="proj1-list">
+                        <li>3D-Anlagenplanung und Verschattungsanalyse mit PV*SOL</li>
+                        <li>Modellierung elektrischer Systeme und Energieflüsse mit MATLAB / Simulink</li>
+                        <li>Auslegung von Wechselrichtern, Strings und DC-/AC-Verkabelung</li>
+                        <li>Erstellung von Ertragsprognosen und Wirtschaftlichkeitsanalysen</li>
+                        <li>Einhaltung relevanter Normen und technischer Anschlussbedingungen</li>
+                    </ul>
+                </div>
+
+                <div class="project-card">
+                    <h3 id="proj2-title">Schaltschrankbau & Inbetriebnahme</h3>
+                    <p style="margin-top: 10px;" id="proj2-desc">
+                        Komplette Fertigung und Inbetriebnahme von Schaltschränken für industrielle und
+                        gebäudetechnische Anwendungen – von der technischen Zeichnung bis zum fertig
+                        geprüften Schrank.
+                    </p>
+                    <ul style="margin-top: 15px;" id="proj2-list">
+                        <li>Auswahl und Dimensionierung von Schutz-, Schalt- und Steuerungskomponenten</li>
+                        <li>Mechanischer Aufbau, Verdrahtung und Beschriftung nach Schaltplan</li>
+                        <li>Funktionsprüfung, Isolationsmessung und Dokumentation</li>
+                        <li>Inbetriebnahme vor Ort inklusive Einweisung des Betreibers</li>
+                    </ul>
+                </div>
+
+                <div class="project-card">
+                    <h3 id="proj3-title">Instandhaltung & Wartung von Generatoranlagen</h3>
+                    <p style="margin-top: 10px;" id="proj3-desc">
+                        Praktische Projekterfahrung im Betrieb eines Generatorhauses: Wartung,
+                        Störungsdiagnose und Optimierung der Leistungsfähigkeit elektrischer
+                        Energieerzeugungsanlagen.
+                    </p>
+                    <ul style="margin-top: 15px;" id="proj3-list">
+                        <li>Präventive und korrektive Wartung an Generatoren und Nebenanlagen</li>
+                        <li>Systematische Fehlerdiagnose und effiziente Störungsbeseitigung</li>
+                        <li>Monitoring von Leistung, Effizienz und Betriebsparametern</li>
+                        <li>Installation, Inbetriebnahme und Integration neuer Komponenten</li>
+                    </ul>
+                </div>
+
+                <div class="cta-section">
+                    <h3 style="color: white; margin-bottom: 15px;" id="more-projects">Weitere Projekte auf Anfrage</h3>
+                    <p id="more-projects-desc">Gerne stelle ich detaillierte Projektbeschreibungen, Berechnungen und Simulationsergebnisse auf Nachfrage zur Verfügung.</p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="tab-content" role="tabpanel" aria-labelledby="tab-skills">
+                <h2 id="skills-title">Technische Kompetenzen</h2>
+
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4 id="skills-sim">☀️ Simulation & Planung</h4>
+                        <ul>
+                            <li>MATLAB / Simulink</li>
+                            <li>PV*SOL</li>
+                            <li>WindPRO</li>
+                            <li>WindSim</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4 id="skills-elec">⚡ Elektrotechnik</h4>
+                        <ul>
+                            <li>Schaltschrankbau</li>
+                            <li>Verkabelung</li>
+                            <li>Installation</li>
+                            <li>Inbetriebnahme</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4 id="skills-plants">🏭 Anlagentechnik</h4>
+                        <ul>
+                            <li>Generatoren</li>
+                            <li>Photovoltaikanlagen</li>
+                            <li>Gebäudetechnik</li>
+                            <li>Industrieanlagen</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4 id="skills-maint">🔧 Instandhaltung</h4>
+                        <ul>
+                            <li>Wartung</li>
+                            <li>Störungsdiagnose</li>
+                            <li>Leistungsüberwachung</li>
+                            <li>Anlagenoptimierung</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4 id="skills-norm">🛡️ Normen & Sicherheit</h4>
+                        <ul>
+                            <li>Elektrotechnische Sicherheitsvorschriften</li>
+                            <li>Einschlägige Normen</li>
+                            <li>Prüf- und Dokumentationsprozesse</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4 id="skills-office">💼 IT & Methoden</h4>
+                        <ul>
+                            <li>Microsoft Office (Word, Excel, PowerPoint, Outlook)</li>
+                            <li>Projektplanung</li>
+                            <li>Teamführung</li>
+                            <li>Technische Dokumentation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;" id="lang-skills">Sprachkenntnisse</h3>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4 id="lang-fa-title">🇮🇷 Persisch</h4>
+                        <p id="lang-fa-level">Muttersprache</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4 id="lang-de-title">🇩🇪 Deutsch</h4>
+                        <p id="lang-de-level">Kenntnisse (B2)</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4 id="lang-en-title">🇬🇧 Englisch</h4>
+                        <p id="lang-en-level">Grundkenntnisse (B1)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents / Certificates Section -->
+            <section id="docku" class="tab-content" role="tabpanel" aria-labelledby="tab-docku">
+                <h2 id="docku-title">
+                    Berufliche Nachweise & Abschlussdokumente /
+                    Certificates & Academic Records
+                </h2>
+
+                <p class="certificate-desc" style="margin-bottom: 25px;" id="docku-desc">
+                    Diese Sammlung umfasst meine akademischen Abschlussunterlagen sowie
+                    Nachweise aus meiner bisherigen beruflichen Tätigkeit im Bereich Elektrotechnik
+                    und erneuerbare Energien.
+                    <br><br>
+                    This collection includes my academic degree documents and employment records
+                    in the field of electrical engineering and renewable energies.
+                </p>
+
+                <div class="project-card">
+                    <h3 class="certificate-title" id="cert1-title">
+                        Masterabschluss – Hochschule Stralsund /
+                        Master's Degree – Stralsund University
+                    </h3>
+
+                    <p class="certificate-text" style="margin-top: 15px;" id="cert1-desc">
+                        Der Masterabschluss in Elektrotechnik mit dem Schwerpunkt
+                        <strong>Erneuerbare Energien</strong> bestätigt meine wissenschaftliche
+                        Qualifikation in den Bereichen Planung und Simulation elektrischer Systeme,
+                        Photovoltaik, Windenergie und Netzintegration.
+                        <br><br>
+                        The Master's degree in Electrical Engineering with a focus on
+                        <strong>Renewable Energies</strong> certifies my academic qualification in
+                        the fields of planning and simulation of electrical systems, photovoltaics,
+                        wind energy and grid integration.
+                    </p>
+                </div>
+
+                <div class="project-card">
+                    <h3 class="certificate-title" id="cert2-title">
+                        Bachelorabschluss – Bahonar Universität /
+                        Bachelor's Degree – Bahonar University
+                    </h3>
+
+                    <p class="certificate-text" style="margin-top: 15px;" id="cert2-desc">
+                        Der Bachelorabschluss in Elektronik-Technologie-Ingenieurwesen bildet die
+                        technische Grundlage meiner Qualifikation in Leistungselektronik,
+                        elektronischen Systemen und Steuerungstechnik.
+                        <br><br>
+                        The Bachelor's degree in Electronic Technology Engineering forms the
+                        technical foundation of my qualification in power electronics, electronic
+                        systems and control technology.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="tab-content" role="tabpanel" aria-labelledby="tab-contact">
+                <h2 id="contact-title">Kontakt aufnehmen</h2>
+                <p style="font-size: 1.1em; margin-bottom: 25px;" id="contact-intro">
+                    Ich freue mich darauf, von Ihnen zu hören! Ob für neue Projekte, Jobangebote
+                    oder einfach zum Netzwerken – kontaktieren Sie mich gerne.
+                </p>
+
+                <div class="cta-section">
+                    <h3 style="color: white; margin-bottom: 20px;" id="contact-cta">Lassen Sie uns zusammenarbeiten!</h3>
+                    <p style="margin-bottom: 20px;" id="contact-cta-desc">
+                        Als motivierter Elektroingenieur mit fundierter Ausbildung und praktischer
+                        Erfahrung bin ich bereit, meine Kenntnisse in einem innovativen Team
+                        einzubringen.
+                    </p>
+                    <a href="tel:+491635172433" class="cta-button" id="contact-phone">📞 Anrufen</a>
+                    <a href="mailto:jahandaridanial@gmail.com" class="cta-button" id="contact-email">✉️ E-Mail schreiben</a>
+                </div>
+
+                <div class="info-box">
+                    <h3 id="avail-title">Standort & Verfügbarkeit</h3>
+                    <p id="avail-location"><strong>📍 Aktueller Standort:</strong> 18435 Stralsund, Deutschland</p>
+                    <p id="avail-status"><strong>✓ Status:</strong> Umzugsbereit</p>
+                    <p id="avail-ready"><strong>💼 Verfügbarkeit:</strong> Für neue Herausforderungen offen</p>
+                    <p style="margin-top: 15px;" id="avail-interests">
+                        <strong>Interessen:</strong> Erneuerbare Energien, Elektromobilität, Smart Grid, kontinuierliche Weiterbildung
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p id="footer-text">© 2026 Daniyal Jahandari – Portfolio | Letztes Update: April 2026</p>
+        </footer>
     </div>
-    <div class="lightbox-content">
-      <img class="lightbox-img" id="lbImg" src="" alt="Large image view">
-    </div>
-    <div class="counter" id="lbCounter">1 / 23</div>
-  </div>
 
-  <script>
-    // Shopping Cart Functionality
-    let selectedArtworks = new Set();
+    <script>
+        let currentLang = 'de';
+        let menuOpen = false;
 
-    // Lightbox functionality
-    let currentImageIndex = 0;
-    const totalImages = 23;
+        const translations = {
+            de: {
+                'tab-about': 'Über mich',
+                'tab-projects': 'Projekte',
+                'tab-skills': 'Kompetenzen',
+                'tab-docku': 'Zertifikate',
+                'tab-contact': 'Kontakt',
 
-    function openLightbox(imageIndex) {
-      currentImageIndex = imageIndex;
-      updateLightboxImage();
-      document.getElementById('lightbox').classList.add('open');
-      document.body.classList.add('lb-lock');
-    }
+                'header-subtitle': 'M.Sc. Elektrotechnik – Erneuerbare Energien',
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.classList.remove('lb-lock');
-    }
+                'about-title': 'Über mich',
+                'about-intro': 'Elektroingenieur (M.Sc.) mit mehrjähriger Erfahrung in der <strong>Gebäude- und Industrietechnik</strong> sowie fundierten Kenntnissen in <strong>Planung, Simulation, Installation, Verkabelung und Inbetriebnahme</strong> elektrischer Systeme. Schwerpunkt auf erneuerbaren Energien, Schaltschrankbau und Anlagenbetrieb.',
 
-    function updateLightboxImage() {
-      const imageMap = {
-        1: 'IMG_0471.JPG', 2: 'IMG_0472.JPG', 3: 'IMG_0474.JPG', 4: 'IMG_0476.JPG', 5: 'IMG_0477.JPG',
-        6: 'IMG_0479.JPG', 7: 'IMG_0481.JPG', 8: 'IMG_0482.JPG', 9: 'IMG_0485.JPG', 10: 'IMG_0486.JPG',
-        11: 'photo_2025-09-19_01-14-34.jpg', 12: 'photo_2025-10-02_19-04-36.jpg', 13: 'photo_2025-10-02_19-04-44.jpg',
-        14: 'photo_2025-10-02_19-04-51.jpg', 15: 'photo_2025-10-02_19-05-39.jpg', 16: 'photo_2025-10-02_19-06-08.jpg',
-        17: 'photo_2025-10-02_19-06-39.jpg', 18: 'photo_2025-10-02_19-06-52.jpg', 19: 'photo_2025-10-02_19-07-09.jpg',
-        20: 'photo_2025-10-02_19-07-39.jpg', 21: 'photo_2025-10-02_19-07-54.jpg', 22: 'photo_2025-10-02_19-08-09.jpg',
-        23: 'photo_2025-10-02_19-08-16.jpg'
-      };
-      
-      const imageSrc = imageMap[currentImageIndex] || 'IMG_0471.JPG';
-      document.getElementById('lbImg').src = imageSrc;
-      document.getElementById('lbCounter').textContent = `${currentImageIndex} / ${totalImages}`;
-    }
+                'exp-title': 'Berufserfahrung',
+                'job1-date': 'Mai 2025 – heute',
+                'job1-title': 'Elektriker | Aene Engelberecht, Iran',
+                'job1-list': '<li>Simulation und Planung von Photovoltaikanlagen mit PV*SOL und MATLAB</li><li>Komplette Schaltschrankfertigung sowie Durchführung aller elektrotechnischen Tätigkeiten</li><li>Installation, Verdrahtung und Inbetriebnahme elektrischer Anlagen</li><li>Prüfung und Dokumentation der ausgeführten Arbeiten nach technischen Vorgaben</li>',
+                'job2-date': 'Januar 2020 – April 2021',
+                'job2-title': 'Leiter der Elektroabteilung | Mojtama Gardeshgaran Arghavan Co., Iran',
+                'job2-list': '<li>Fachliche Führung und Koordination des Elektroteams</li><li>Planung, Wartung und Überwachung elektrischer Anlagen im Gebäudeumfeld</li><li>Sicherstellung der Einhaltung geltender Sicherheitsvorschriften und Normen</li><li>Projektplanung sowie Einweisung und Schulung der Mitarbeitenden</li>',
+                'job3-date': 'Februar 2017 – Dezember 2019',
+                'job3-title': 'Elektroingenieur (Generatorhaus) | Mehvarsazan Co., Iran',
+                'job3-list': '<li>Wartung und Reparatur von Generatoren sowie weiterer elektrischer Anlagen</li><li>Diagnose und Behebung von Störungen zur Sicherstellung der Anlagenverfügbarkeit</li><li>Überwachung von Leistung und Effizienz der Generatoren im laufenden Betrieb</li><li>Installation und Inbetriebnahme neuer Systeme und Komponenten</li>',
 
-    function nextImage() {
-      currentImageIndex = currentImageIndex >= totalImages ? 1 : currentImageIndex + 1;
-      updateLightboxImage();
-    }
+                'edu-title': 'Bildungsweg',
+                'edu1-date': '2023 – 2025',
+                'edu1-title': 'M.Sc. Elektrotechnik – Erneuerbare Energien',
+                'edu1-location': 'Hochschule Stralsund, Deutschland',
+                'edu1-focus': '<strong>Schwerpunkte:</strong> Planung und Simulation elektrischer Systeme, Photovoltaik, Windenergie, Netzintegration erneuerbarer Energien',
+                'edu2-date': '2015 – 2017',
+                'edu2-title': 'B.Sc. Elektronik-Technologie-Ingenieurwesen',
+                'edu2-location': 'Bahonar Universität, Iran',
+                'edu2-focus': '<strong>Schwerpunkte:</strong> Elektronische Systeme, Leistungselektronik, Steuerungs- und Regelungstechnik',
 
-    function prevImage() {
-      currentImageIndex = currentImageIndex <= 1 ? totalImages : currentImageIndex - 1;
-      updateLightboxImage();
-    }
+                'projects-title': 'Projekte',
+                'proj1-title': 'Photovoltaik-Planung & Simulation',
+                'proj1-desc': 'Auslegung, Simulation und Ertragsprognose von Photovoltaikanlagen unter Verwendung professioneller Planungssoftware. Schwerpunkt auf Verschattungsanalyse, Wechselrichterdimensionierung und wirtschaftlicher Bewertung.',
+                'proj1-list': '<li>3D-Anlagenplanung und Verschattungsanalyse mit PV*SOL</li><li>Modellierung elektrischer Systeme und Energieflüsse mit MATLAB / Simulink</li><li>Auslegung von Wechselrichtern, Strings und DC-/AC-Verkabelung</li><li>Erstellung von Ertragsprognosen und Wirtschaftlichkeitsanalysen</li><li>Einhaltung relevanter Normen und technischer Anschlussbedingungen</li>',
+                'proj2-title': 'Schaltschrankbau & Inbetriebnahme',
+                'proj2-desc': 'Komplette Fertigung und Inbetriebnahme von Schaltschränken für industrielle und gebäudetechnische Anwendungen – von der technischen Zeichnung bis zum fertig geprüften Schrank.',
+                'proj2-list': '<li>Auswahl und Dimensionierung von Schutz-, Schalt- und Steuerungskomponenten</li><li>Mechanischer Aufbau, Verdrahtung und Beschriftung nach Schaltplan</li><li>Funktionsprüfung, Isolationsmessung und Dokumentation</li><li>Inbetriebnahme vor Ort inklusive Einweisung des Betreibers</li>',
+                'proj3-title': 'Instandhaltung & Wartung von Generatoranlagen',
+                'proj3-desc': 'Praktische Projekterfahrung im Betrieb eines Generatorhauses: Wartung, Störungsdiagnose und Optimierung der Leistungsfähigkeit elektrischer Energieerzeugungsanlagen.',
+                'proj3-list': '<li>Präventive und korrektive Wartung an Generatoren und Nebenanlagen</li><li>Systematische Fehlerdiagnose und effiziente Störungsbeseitigung</li><li>Monitoring von Leistung, Effizienz und Betriebsparametern</li><li>Installation, Inbetriebnahme und Integration neuer Komponenten</li>',
+                'more-projects': 'Weitere Projekte auf Anfrage',
+                'more-projects-desc': 'Gerne stelle ich detaillierte Projektbeschreibungen, Berechnungen und Simulationsergebnisse auf Nachfrage zur Verfügung.',
 
-    // Event listeners for lightbox
-    document.getElementById('lbClose').addEventListener('click', closeLightbox);
-    document.getElementById('lbNext').addEventListener('click', nextImage);
-    document.getElementById('lbPrev').addEventListener('click', prevImage);
+                'skills-title': 'Technische Kompetenzen',
+                'skills-sim': '☀️ Simulation & Planung',
+                'skills-elec': '⚡ Elektrotechnik',
+                'skills-plants': '🏭 Anlagentechnik',
+                'skills-maint': '🔧 Instandhaltung',
+                'skills-norm': '🛡️ Normen & Sicherheit',
+                'skills-office': '💼 IT & Methoden',
+                'lang-skills': 'Sprachkenntnisse',
+                'lang-fa-title': '🇮🇷 Persisch',
+                'lang-fa-level': 'Muttersprache',
+                'lang-de-title': '🇩🇪 Deutsch',
+                'lang-de-level': 'Kenntnisse (B2)',
+                'lang-en-title': '🇬🇧 Englisch',
+                'lang-en-level': 'Grundkenntnisse (B1)',
 
-    // Close lightbox when clicking on the background
-    document.getElementById('lightbox').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeLightbox();
-      }
-    });
+                'docku-title': 'Berufliche Nachweise & Abschlussdokumente',
+                'docku-desc': 'Diese Sammlung umfasst meine akademischen Abschlussunterlagen sowie Nachweise aus meiner bisherigen beruflichen Tätigkeit im Bereich Elektrotechnik und erneuerbare Energien.',
+                'cert1-title': 'Masterabschluss – Hochschule Stralsund',
+                'cert1-desc': 'Der Masterabschluss in Elektrotechnik mit dem Schwerpunkt <strong>Erneuerbare Energien</strong> bestätigt meine wissenschaftliche Qualifikation in den Bereichen Planung und Simulation elektrischer Systeme, Photovoltaik, Windenergie und Netzintegration.',
+                'cert2-title': 'Bachelorabschluss – Bahonar Universität',
+                'cert2-desc': 'Der Bachelorabschluss in Elektronik-Technologie-Ingenieurwesen bildet die technische Grundlage meiner Qualifikation in Leistungselektronik, elektronischen Systemen und Steuerungstechnik.',
 
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      if (document.getElementById('lightbox').classList.contains('open')) {
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-      }
-    });
+                'contact-title': 'Kontakt aufnehmen',
+                'contact-intro': 'Ich freue mich darauf, von Ihnen zu hören! Ob für neue Projekte, Jobangebote oder einfach zum Netzwerken – kontaktieren Sie mich gerne.',
+                'contact-cta': 'Lassen Sie uns zusammenarbeiten!',
+                'contact-cta-desc': 'Als motivierter Elektroingenieur mit fundierter Ausbildung und praktischer Erfahrung bin ich bereit, meine Kenntnisse in einem innovativen Team einzubringen.',
+                'contact-phone': '📞 Anrufen',
+                'contact-email': '✉️ E-Mail schreiben',
+                'avail-title': 'Standort & Verfügbarkeit',
+                'avail-location': '<strong>📍 Aktueller Standort:</strong> 18435 Stralsund, Deutschland',
+                'avail-status': '<strong>✓ Status:</strong> Umzugsbereit',
+                'avail-ready': '<strong>💼 Verfügbarkeit:</strong> Für neue Herausforderungen offen',
+                'avail-interests': '<strong>Interessen:</strong> Erneuerbare Energien, Elektromobilität, Smart Grid, kontinuierliche Weiterbildung',
 
-    // Update translations for new content
-    const translations = {
-      en: {
-        logoText: 'Shima Gallery',
-        navHome: 'Home',
-        navGallery: 'Gallery',
-        navAbout: 'About Me',
-        heroTitle: 'Shima Gallery',
-        heroSubtitle: 'Realistic Artwork with Pen & Pencil ✏️',
-        galleryTitle: 'My Artworks',
-        aboutTitle: 'About Me',
-        aboutText: 'Welcome to my gallery! I am Shima and I create realistic artworks with pen and pencil. Each piece is created with patience, precision and passion for detail. I find my inspiration in the beauty of everyday life and the complexity of human expression.',
-        contactTitle: 'Contact',
-        contactText: 'Interested in my artwork? For purchase, exhibitions, commissions or collaborations, feel free to reach out to me. I\'d love to hear from you!',
-        emailButton: 'ShimaArtist1994@gmail.com',
-        purchaseStrong: 'Interested in purchasing an artwork?',
-        purchaseDescription: 'Use the + button to select artworks, then proceed to purchase to send your inquiry.',
-        purchaseTitle: 'Purchase Artworks',
-        selectedArtworks: 'Selected Artworks',
-        sendInquiry: 'Send Purchase Inquiry',
-        thankYou: 'Thank You for Your Interest!',
-        confirmationMessage: 'Your purchase inquiry has been successfully sent to Shima. You will receive a confirmation email shortly.',
-        emptyCart: 'No artworks selected yet.',
-        selectFromGallery: 'Please select artworks from the gallery first.',
-        remove: 'Remove',
-        firstNameLabel: 'First Name *',
-        lastNameLabel: 'Last Name *',
-        emailLabel: 'Email Address *',
-        messageLabel: 'Additional Message'
-      },
-      de: {
-        logoText: 'Shima Galerie',
-        navHome: 'Home',
-        navGallery: 'Galerie',
-        navAbout: 'Über mich',
-        heroTitle: 'Shima Galerie',
-        heroSubtitle: 'Realistische Kunstwerke mit Kugelschreiber & Bleistift ✏️',
-        galleryTitle: 'Meine Kunstwerke',
-        aboutTitle: 'Über mich',
-        aboutText: 'Willkommen in meiner Galerie! Ich bin Shima und erschaffe realistische Kunstwerke mit Kugelschreiber und Bleistift. Jedes Werk entsteht durch Geduld, Präzision und Leidenschaft für Details. Meine Inspiration finde ich in der Schönheit des Alltäglichen und der Komplexität menschlicher Ausdrucksformen.',
-        contactTitle: 'Kontakt',
-        contactText: 'Interessiert an meinen Kunstwerken? Für Verkauf, Ausstellungen, Auftragsarbeiten oder Zusammenarbeit können Sie mich gerne kontaktieren. Ich freue mich von Ihnen zu hören!',
-        emailButton: 'ShimaArtist1994@gmail.com',
-        purchaseStrong: 'Interessiert an einem Kunstwerk?',
-        purchaseDescription: 'Verwenden Sie die + Schaltfläche, um Kunstwerke auszuwählen, und fahren Sie dann mit dem Kauf fort, um Ihre Anfrage zu senden.',
-        purchaseTitle: 'Kunstwerke Kaufen',
-        selectedArtworks: 'Ausgewählte Kunstwerke',
-        sendInquiry: 'Kaufanfrage Senden',
-        thankYou: 'Vielen Dank für Ihr Interesse!',
-        confirmationMessage: 'Ihre Kaufanfrage wurde erfolgreich an Shima gesendet. Sie erhalten in Kürze eine Bestätigungs-E-Mail.',
-        emptyCart: 'Noch keine Kunstwerke ausgewählt.',
-        selectFromGallery: 'Bitte wählen Sie zuerst Kunstwerke aus der Galerie aus.',
-        remove: 'Entfernen',
-        firstNameLabel: 'Vorname *',
-        lastNameLabel: 'Nachname *',
-        emailLabel: 'E-Mail-Adresse *',
-        messageLabel: 'Zusätzliche Nachricht'
-      },
-      fa: {
-        logoText: 'گالری شیما',
-        navHome: 'خانه',
-        navGallery: 'گالری',
-        navAbout: 'درباره من',
-        heroTitle: 'گالری شیما',
-        heroSubtitle: 'آثار هنری واقع‌گرایانه با خودکار و مداد ✏️',
-        galleryTitle: 'آثار هنری من',
-        aboutTitle: 'درباره من',
-        aboutText: 'به گالری من خوش آمدید! من شیما هستم و آثار هنری واقع‌گرایانه با خودکار و مداد خلق می‌کنم. هر اثر با صبر، دقت و اشتیاق به جزئیات ایجاد می‌شود. الهام من را در زیبایی زندگی روزمره و پیچیدگی بیان انسانی می‌یابم.',
-        contactTitle: 'تماس',
-        contactText: 'به آثار هنری من علاقه‌مند هستید؟ برای خرید، نمایشگاه‌ها، سفارشات یا همکاری، می‌توانید با من تماس بگیرید. خوشحال می‌شوم پیام شما را دریافت کنم!',
-        emailButton: 'ShimaArtist1994@gmail.com',
-        purchaseStrong: 'علاقه‌مند به خرید یک اثر هنری هستید؟',
-        purchaseDescription: 'از دکمه + برای انتخاب آثار هنری استفاده کنید، سپس برای ارسال درخواست خود به بخش خرید بروید.',
-        purchaseTitle: 'خرید آثار هنری',
-        selectedArtworks: 'آثار هنری انتخاب شده',
-        sendInquiry: 'ارسال درخواست خرید',
-        thankYou: 'از علاقه شما سپاسگزاریم!',
-        confirmationMessage: 'درخواست خرید شما با موفقیت به شیما ارسال شد. به زودی ایمیل تأیید دریافت خواهید کرد.',
-        emptyCart: 'هنوز هیچ اثر هنری انتخاب نشده است.',
-        selectFromGallery: 'لطفاً ابتدا آثار هنری را از گالری انتخاب کنید.',
-        remove: 'حذف',
-        firstNameLabel: 'نام *',
-        lastNameLabel: 'نام خانوادگی *',
-        emailLabel: 'آدرس ایمیل *',
-        messageLabel: 'پیام اضافی'
-      }
-    };
+                'footer-text': '© 2026 Daniyal Jahandari – Portfolio | Letztes Update: April 2026'
+            },
 
-    function toggleArtworkSelection(artworkNumber, button) {
-      const item = document.querySelector(`[data-artwork="${artworkNumber}"]`);
-      
-      if (selectedArtworks.has(artworkNumber)) {
-        selectedArtworks.delete(artworkNumber);
-        item.classList.remove('selected');
-        button.classList.remove('selected');
-        button.textContent = '+';
-      } else {
-        selectedArtworks.add(artworkNumber);
-        item.classList.add('selected');
-        button.classList.add('selected');
-        button.textContent = '✓';
-      }
-      
-      updateCart();
-    }
+            en: {
+                'tab-about': 'About Me',
+                'tab-projects': 'Projects',
+                'tab-skills': 'Skills',
+                'tab-docku': 'Certificates',
+                'tab-contact': 'Contact',
 
-    function updateCart() {
-      const cartCount = document.getElementById('cartCount');
-      cartCount.textContent = selectedArtworks.size;
-      
-      updateCartPage();
-    }
+                'header-subtitle': 'M.Sc. Electrical Engineering – Renewable Energies',
 
-    function updateCartPage() {
-      const cartItemsContainer = document.getElementById('cartItems');
-      const selectedArtworksList = document.getElementById('selectedArtworksList');
-      
-      // Update selected artworks list
-      selectedArtworksList.innerHTML = '';
-      Array.from(selectedArtworks).forEach(artworkNumber => {
-        const numberElement = document.createElement('div');
-        numberElement.className = 'artwork-number';
-        numberElement.textContent = artworkNumber;
-        selectedArtworksList.appendChild(numberElement);
-      });
-      
-      // Update cart items
-      cartItemsContainer.innerHTML = '';
-      
-      if (selectedArtworks.size === 0) {
-        cartItemsContainer.innerHTML = `
-          <div class="empty-cart">
-            <p>${getTranslation('emptyCart')}</p>
-            <button class="page-button" onclick="showPage('gallery')">
-              ${getTranslation('selectFromGallery')}
-            </button>
-          </div>
-        `;
-      } else {
-        Array.from(selectedArtworks).forEach(artworkNumber => {
-          const cartItem = document.createElement('div');
-          cartItem.className = 'cart-item';
-          cartItem.innerHTML = `
-            <div class="cart-item-image">
-              <img src="${getArtworkImage(artworkNumber)}" alt="Artwork ${artworkNumber}">
-            </div>
-            <div class="cart-item-details">
-              <div class="cart-item-number">Artwork #${artworkNumber}</div>
-              <p>Realistic pen and pencil drawing</p>
-            </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${artworkNumber})">
-              ${getTranslation('remove')}
-            </button>
-          `;
-          cartItemsContainer.appendChild(cartItem);
+                'about-title': 'About Me',
+                'about-intro': 'Electrical Engineer (M.Sc.) with several years of experience in <strong>building and industrial engineering</strong> as well as solid knowledge in <strong>planning, simulation, installation, wiring and commissioning</strong> of electrical systems. Focus on renewable energies, control cabinet construction and plant operation.',
+
+                'exp-title': 'Professional Experience',
+                'job1-date': 'May 2025 – present',
+                'job1-title': 'Electrician | Aene Engelberecht, Iran',
+                'job1-list': '<li>Simulation and planning of photovoltaic systems with PV*SOL and MATLAB</li><li>Complete control cabinet fabrication and execution of all electrical tasks</li><li>Installation, wiring and commissioning of electrical systems</li><li>Testing and documentation of completed work according to technical specifications</li>',
+                'job2-date': 'January 2020 – April 2021',
+                'job2-title': 'Head of Electrical Department | Mojtama Gardeshgaran Arghavan Co., Iran',
+                'job2-list': '<li>Technical leadership and coordination of the electrical team</li><li>Planning, maintenance and monitoring of electrical systems in building environments</li><li>Ensuring compliance with applicable safety regulations and standards</li><li>Project planning, staff briefing and training</li>',
+                'job3-date': 'February 2017 – December 2019',
+                'job3-title': 'Electrical Engineer (Generator House) | Mehvarsazan Co., Iran',
+                'job3-list': '<li>Maintenance and repair of generators and other electrical systems</li><li>Fault diagnosis and troubleshooting to ensure plant availability</li><li>Monitoring of generator performance and efficiency during operation</li><li>Installation and commissioning of new systems and components</li>',
+
+                'edu-title': 'Education',
+                'edu1-date': '2023 – 2025',
+                'edu1-title': 'M.Sc. Electrical Engineering – Renewable Energies',
+                'edu1-location': 'Stralsund University of Applied Sciences, Germany',
+                'edu1-focus': '<strong>Focus areas:</strong> Planning and simulation of electrical systems, photovoltaics, wind energy, grid integration of renewable energies',
+                'edu2-date': '2015 – 2017',
+                'edu2-title': 'B.Sc. Electronic Technology Engineering',
+                'edu2-location': 'Bahonar University, Iran',
+                'edu2-focus': '<strong>Focus areas:</strong> Electronic systems, power electronics, control engineering',
+
+                'projects-title': 'Projects',
+                'proj1-title': 'Photovoltaic Planning & Simulation',
+                'proj1-desc': 'Design, simulation and yield forecasting of photovoltaic systems using professional planning software. Focus on shading analysis, inverter sizing and economic evaluation.',
+                'proj1-list': '<li>3D system planning and shading analysis with PV*SOL</li><li>Modeling of electrical systems and energy flows with MATLAB / Simulink</li><li>Sizing of inverters, strings and DC/AC cabling</li><li>Preparation of yield forecasts and profitability analyses</li><li>Compliance with relevant standards and technical connection conditions</li>',
+                'proj2-title': 'Control Cabinet Construction & Commissioning',
+                'proj2-desc': 'Complete fabrication and commissioning of control cabinets for industrial and building applications – from technical drawing to fully tested cabinet.',
+                'proj2-list': '<li>Selection and sizing of protection, switching and control components</li><li>Mechanical assembly, wiring and labeling according to circuit diagrams</li><li>Functional testing, insulation measurement and documentation</li><li>On-site commissioning including operator briefing</li>',
+                'proj3-title': 'Maintenance & Servicing of Generator Systems',
+                'proj3-desc': 'Hands-on project experience in the operation of a generator house: maintenance, fault diagnosis and optimization of the performance of electrical power generation systems.',
+                'proj3-list': '<li>Preventive and corrective maintenance of generators and auxiliary systems</li><li>Systematic fault diagnosis and efficient troubleshooting</li><li>Monitoring of performance, efficiency and operating parameters</li><li>Installation, commissioning and integration of new components</li>',
+                'more-projects': 'More projects on request',
+                'more-projects-desc': 'I am happy to provide detailed project descriptions, calculations and simulation results on request.',
+
+                'skills-title': 'Technical Skills',
+                'skills-sim': '☀️ Simulation & Planning',
+                'skills-elec': '⚡ Electrical Engineering',
+                'skills-plants': '🏭 Plant Technology',
+                'skills-maint': '🔧 Maintenance',
+                'skills-norm': '🛡️ Standards & Safety',
+                'skills-office': '💼 IT & Methods',
+                'lang-skills': 'Language Skills',
+                'lang-fa-title': '🇮🇷 Persian',
+                'lang-fa-level': 'Native speaker',
+                'lang-de-title': '🇩🇪 German',
+                'lang-de-level': 'Intermediate (B2)',
+                'lang-en-title': '🇬🇧 English',
+                'lang-en-level': 'Basic (B1)',
+
+                'docku-title': 'Certificates & Academic Records',
+                'docku-desc': 'This collection includes my academic degree documents and employment records in the field of electrical engineering and renewable energies.',
+                'cert1-title': 'Master\'s Degree – Stralsund University',
+                'cert1-desc': 'The Master\'s degree in Electrical Engineering with a focus on <strong>Renewable Energies</strong> certifies my academic qualification in the fields of planning and simulation of electrical systems, photovoltaics, wind energy and grid integration.',
+                'cert2-title': 'Bachelor\'s Degree – Bahonar University',
+                'cert2-desc': 'The Bachelor\'s degree in Electronic Technology Engineering forms the technical foundation of my qualification in power electronics, electronic systems and control technology.',
+
+                'contact-title': 'Get in Touch',
+                'contact-intro': 'I look forward to hearing from you! Whether for new projects, job offers or just networking – feel free to contact me.',
+                'contact-cta': 'Let\'s work together!',
+                'contact-cta-desc': 'As a motivated electrical engineer with solid education and practical experience, I am ready to contribute my knowledge to an innovative team.',
+                'contact-phone': '📞 Call',
+                'contact-email': '✉️ Send Email',
+                'avail-title': 'Location & Availability',
+                'avail-location': '<strong>📍 Current Location:</strong> 18435 Stralsund, Germany',
+                'avail-status': '<strong>✓ Status:</strong> Relocation ready',
+                'avail-ready': '<strong>💼 Availability:</strong> Open to new challenges',
+                'avail-interests': '<strong>Interests:</strong> Renewable energies, electromobility, smart grid, continuous education',
+
+                'footer-text': '© 2026 Daniyal Jahandari – Portfolio | Last update: April 2026'
+            }
+        };
+
+        function showTab(tabId, event) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+                button.setAttribute('aria-selected', 'false');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+                event.currentTarget.setAttribute('aria-selected', 'true');
+            } else {
+                const activeButton = document.querySelector(`[aria-controls="${tabId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                    activeButton.setAttribute('aria-selected', 'true');
+                }
+            }
+
+            if (window.innerWidth <= 768 && menuOpen) {
+                toggleMenu();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const activeBtn = document.getElementById(`lang-${lang}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            Object.keys(translations[lang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (
+                        key.includes('list') ||
+                        key.includes('intro') ||
+                        key.includes('desc') ||
+                        key.includes('focus') ||
+                        key.includes('partner') ||
+                        key.includes('avail') ||
+                        key.includes('location') ||
+                        key.includes('status') ||
+                        key.includes('ready') ||
+                        key.includes('interests') ||
+                        key.includes('cta-desc') ||
+                        key.includes('cert1-desc') ||
+                        key.includes('cert2-desc')
+                    ) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle && !menuOpen) {
+                menuToggle.textContent = lang === 'de' ? '☰ Menü' : '☰ Menu';
+            }
+            if (menuToggle && menuOpen) {
+                menuToggle.textContent = lang === 'de' ? '✕ Schließen' : '✕ Close';
+            }
+        }
+
+        function toggleMenu() {
+            const tabsMenu = document.getElementById('tabsMenu');
+            const menuToggle = document.querySelector('.menu-toggle');
+
+            menuOpen = !menuOpen;
+            tabsMenu.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', menuOpen.toString());
+
+            if (menuOpen) {
+                menuToggle.textContent = currentLang === 'de' ? '✕ Schließen' : '✕ Close';
+            } else {
+                menuToggle.textContent = currentLang === 'de' ? '☰ Menü' : '☰ Menu';
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        }
+
+        function toggleScrollButton() {
+            const scrollButton = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollButton.style.display = 'flex';
+            } else {
+                scrollButton.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            toggleScrollButton();
         });
-      }
-    }
 
-    function removeFromCart(artworkNumber) {
-      selectedArtworks.delete(artworkNumber);
-      const item = document.querySelector(`[data-artwork="${artworkNumber}"]`);
-      const button = item.querySelector('.select-btn');
-      if (item) {
-        item.classList.remove('selected');
-        button.classList.remove('selected');
-        button.textContent = '+';
-      }
-      updateCart();
-    }
-
-    function getArtworkImage(artworkNumber) {
-      const imageMap = {
-        1: 'IMG_0471.JPG', 2: 'IMG_0472.JPG', 3: 'IMG_0474.JPG', 4: 'IMG_0476.JPG', 5: 'IMG_0477.JPG',
-        6: 'IMG_0479.JPG', 7: 'IMG_0481.JPG', 8: 'IMG_0482.JPG', 9: 'IMG_0485.JPG', 10: 'IMG_0486.JPG',
-        11: 'photo_2025-09-19_01-14-34.jpg', 12: 'photo_2025-10-02_19-04-36.jpg', 13: 'photo_2025-10-02_19-04-44.jpg',
-        14: 'photo_2025-10-02_19-04-51.jpg', 15: 'photo_2025-10-02_19-05-39.jpg', 16: 'photo_2025-10-02_19-06-08.jpg',
-        17: 'photo_2025-10-02_19-06-39.jpg', 18: 'photo_2025-10-02_19-06-52.jpg', 19: 'photo_2025-10-02_19-07-09.jpg',
-        20: 'photo_2025-10-02_19-07-39.jpg', 21: 'photo_2025-10-02_19-07-54.jpg', 22: 'photo_2025-10-02_19-08-09.jpg',
-        23: 'photo_2025-10-02_19-08-16.jpg'
-      };
-      return imageMap[artworkNumber] || 'IMG_0471.JPG';
-    }
-
-    function submitOrder() {
-      const firstName = document.getElementById('firstName').value;
-      const lastName = document.getElementById('lastName').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-      
-      if (!firstName || !lastName || !email) {
-        alert('Please fill in all required fields.');
-        return;
-      }
-      
-      if (selectedArtworks.size === 0) {
-        alert('Please select at least one artwork.');
-        return;
-      }
-      
-      // Show success message without opening email client
-      document.getElementById('orderForm').style.display = 'none';
-      document.getElementById('successMessage').style.display = 'block';
-      
-      // Reset form
-      document.getElementById('firstName').value = '';
-      document.getElementById('lastName').value = '';
-      document.getElementById('email').value = '';
-      document.getElementById('message').value = '';
-      
-      // Clear cart
-      selectedArtworks.clear();
-      updateCart();
-      
-      // Reset all selection buttons
-      document.querySelectorAll('.select-btn').forEach(button => {
-        button.classList.remove('selected');
-        button.textContent = '+';
-      });
-      
-      // Reset all gallery items
-      document.querySelectorAll('.gallery-item').forEach(item => {
-        item.classList.remove('selected');
-      });
-    }
-
-    function getTranslation(key) {
-      const lang = document.getElementById('languageSelect').value;
-      return translations[lang][key] || key;
-    }
-
-    function changeLanguage() {
-      const lang = document.getElementById('languageSelect').value;
-      const t = translations[lang];
-      
-      // Update existing translations
-      document.getElementById('logoText').textContent = t.logoText;
-      document.getElementById('navHome').textContent = t.navHome;
-      document.getElementById('navGallery').textContent = t.navGallery;
-      document.getElementById('navAbout').textContent = t.navAbout;
-      document.getElementById('heroTitle').textContent = t.heroTitle;
-      document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
-      document.getElementById('galleryTitle').textContent = t.galleryTitle;
-      document.getElementById('aboutTitle').textContent = t.aboutTitle;
-      document.getElementById('aboutText').textContent = t.aboutText;
-      document.getElementById('contactTitle').textContent = t.contactTitle;
-      document.getElementById('contactText').textContent = t.contactText;
-      document.getElementById('emailButton').textContent = t.emailButton;
-      document.getElementById('purchaseStrong').textContent = t.purchaseStrong;
-      document.getElementById('purchaseDescription').textContent = t.purchaseDescription;
-      
-      // Update new purchase page translations
-      const purchaseTitle = document.getElementById('purchaseTitle');
-      const submitButton = document.getElementById('submitButton');
-      const successMessage = document.getElementById('successMessage');
-      const firstNameLabel = document.getElementById('firstNameLabel');
-      const lastNameLabel = document.getElementById('lastNameLabel');
-      const emailLabel = document.getElementById('emailLabel');
-      const messageLabel = document.getElementById('messageLabel');
-      
-      if (purchaseTitle) purchaseTitle.textContent = t.purchaseTitle;
-      if (submitButton) submitButton.textContent = t.sendInquiry;
-      if (successMessage) {
-        successMessage.querySelector('h3').textContent = t.thankYou;
-        successMessage.querySelector('p').textContent = t.confirmationMessage;
-      }
-      if (firstNameLabel) firstNameLabel.textContent = t.firstNameLabel;
-      if (lastNameLabel) lastNameLabel.textContent = t.lastNameLabel;
-      if (emailLabel) emailLabel.textContent = t.emailLabel;
-      if (messageLabel) messageLabel.textContent = t.messageLabel;
-      
-      document.body.style.direction = lang === 'fa' ? 'rtl' : 'ltr';
-      document.documentElement.lang = lang;
-      
-      // Update cart page content
-      updateCartPage();
-    }
-
-    function showPage(pageId) {
-      document.querySelectorAll('.page-container').forEach(page => {
-        page.classList.remove('active');
-      });
-      
-      document.getElementById(`${pageId}-page`).classList.add('active');
-      
-      navLinks.classList.remove('active');
-      menuToggle.classList.remove('active');
-      
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      // Update cart when showing purchase page
-      if (pageId === 'purchase') {
-        updateCartPage();
-        // Reset success message display
-        document.getElementById('orderForm').style.display = 'block';
-        document.getElementById('successMessage').style.display = 'none';
-      }
-    }
-
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', function() {
-      updateCart();
-    });
-
-    // Mobile Menu Toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      menuToggle.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on links
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        menuToggle.classList.remove('active');
-      });
-    });
-  </script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 768) {
+                menuToggle.textContent = '☰ Menü';
+            }
+        });
+    </script>
 </body>
 </html>
